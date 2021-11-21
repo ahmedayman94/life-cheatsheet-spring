@@ -2,7 +2,7 @@ app:
   datasource:
     main:
       driver-class-name: org.postgresql.Driver
-      jdbc-url: jdbc:postgresql://localhost:5432/postgres
+      jdbc-url: jdbc:postgresql://localhost:5432/life-cheatsheet
       username: postgres
-      password: password
+      password: Welcome
       pool-size: 30
