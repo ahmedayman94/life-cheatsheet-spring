@@ -1,15 +1,15 @@
-package com.lifecheatsheet.springbackend.models;
+package com.lifecheatsheet.springbackend.entities;
 
 import com.sun.istack.NotNull;
 
 import javax.persistence.*;
 
 @Entity
-@Table(name="users")
+@Table(name = "users")
 public class User {
     @Id
     @Column(name = "user_id")
-    @GeneratedValue(strategy =  GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @NotNull
@@ -31,6 +31,17 @@ public class User {
     @NotNull
     @Column(name = "is_active")
     private Boolean isActive;
+
+    public User() {
+    }
+
+    public User(String firstName, String lastName, String email) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        isActive = false;
+        access = UserAccessRights.readonly;
+    }
 
     public Integer getId() {
         return id;
