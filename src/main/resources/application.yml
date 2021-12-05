@@ -4,5 +4,5 @@ app:
       driver-class-name: org.postgresql.Driver
       jdbc-url: jdbc:postgresql://localhost:5432/life-cheatsheet
       username: postgres
-      password: Welcome
+      password: docker
       pool-size: 30
