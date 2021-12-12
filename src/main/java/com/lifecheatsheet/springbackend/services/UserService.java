@@ -1,10 +1,11 @@
 package com.lifecheatsheet.springbackend.services;
 
+import com.lifecheatsheet.springbackend.config.UserDetails;
+import com.lifecheatsheet.springbackend.dtos.UserUpdateDto;
 import com.lifecheatsheet.springbackend.entities.User;
-import com.lifecheatsheet.springbackend.exception.UnAuthorizedException;
-import com.lifecheatsheet.springbackend.models.SignupRequest;
 import com.lifecheatsheet.springbackend.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -12,37 +13,38 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
-    @Autowired
-    private TokenService tokenService;
-
-    public UserService(UserRepository userRepository, TokenService tokenVerifier) {
+    public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
-        this.tokenService = tokenVerifier;
     }
 
-    public User provisionUser(final SignupRequest signupRequest) throws Exception {
-        try {
-            tokenService.verifyTokenByGoogle(signupRequest.getIdToken());
-        } catch (Exception exception) {
-            throw new UnAuthorizedException();
-        }
+    public User getUserByEmail(String email) {
+        return userRepository.findByEmail(email);
+    }
 
-        User userDecodedFromToken = tokenService.extractUserFromToken(signupRequest.getIdToken());
-        User userFromDb = userRepository.findByEmail(userDecodedFromToken.getEmail());
+    public User provisionUser(final UserDetails userDetails) {
+        User userFromDb = userRepository.findByEmail(userDetails.getEmail());
         if (userFromDb == null)
-            userFromDb = registerUser(userDecodedFromToken);
-
-        authenticateUser(userFromDb);
+            userFromDb = registerUser(userDetails);
 
         return userFromDb;
     }
 
-    private User registerUser(final User newUser) {
-//        if (username == null) throw new InvalidParameterException("Username must be defined");
-        return userRepository.saveAndFlush(newUser);
+    public User updateUserInfo(int userId, UserUpdateDto user) {
+        final User userFromDb = userRepository.findById(userId).get();
+
+        userFromDb.setFirstName(user.getFirstName());
+        userFromDb.setLastName(user.getLastName());
+
+        return userRepository.saveAndFlush(userFromDb);
     }
 
-    private void authenticateUser(User user) {
-
+    private User registerUser(final UserDetails userDetails) {
+        return userRepository.saveAndFlush(
+                new User(
+                        userDetails.getFirstName(),
+                        userDetails.getLastName(),
+                        userDetails.getEmail()
+                )
+        );
     }
 }
