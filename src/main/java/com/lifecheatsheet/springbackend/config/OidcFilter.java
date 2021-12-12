@@ -44,6 +44,6 @@ public class OidcFilter extends AbstractAuthenticationProcessingFilter {
             session.invalidate();
 
         // Create new session
-        return request.getSession(true);
+        return request.getSession();
     }
 }

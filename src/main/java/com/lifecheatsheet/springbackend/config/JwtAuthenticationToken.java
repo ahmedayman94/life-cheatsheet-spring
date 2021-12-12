@@ -4,7 +4,6 @@ import org.springframework.security.authentication.AbstractAuthenticationToken;
 
 public class JwtAuthenticationToken extends AbstractAuthenticationToken {
     private final String idToken;
-    private UserDetails userDetails;
 
     public JwtAuthenticationToken(String idToken) {
         super(null);
@@ -14,17 +13,17 @@ public class JwtAuthenticationToken extends AbstractAuthenticationToken {
     public JwtAuthenticationToken(String idToken, UserDetails userDetails) {
         super(null);
         this.idToken = idToken;
-        this.setAuthenticated(true);
-        this.userDetails = userDetails;
+        setAuthenticated(true);
+        setDetails(userDetails);
     }
 
     @Override
-    public Object getCredentials() {
+    public String getCredentials() {
         return idToken;
     }
 
     @Override
-    public Object getPrincipal() {
-        return userDetails;
+    public String getPrincipal() {
+        return ((UserDetails) getDetails()).getEmail();
     }
 }
