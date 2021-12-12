@@ -10,7 +10,7 @@ import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.DecodedJWT;
-import com.lifecheatsheet.springbackend.entities.User;
+import com.lifecheatsheet.springbackend.config.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.net.MalformedURLException;
@@ -29,6 +29,8 @@ public class TokenService {
 
     public void verifyTokenByGoogle(String token) throws JwkException {
         try {
+            if(token == null) throw new JwkException("no token");
+
             DecodedJWT jwt = JWT.decode(token);
             Jwk jwk = provider.get(jwt.getKeyId());
             Algorithm algorithm = Algorithm.RSA256((RSAPublicKey) jwk.getPublicKey(), null);
@@ -43,13 +45,13 @@ public class TokenService {
         }
     }
 
-    public User extractUserFromToken(final String token) {
+    public UserDetails extractUserFromToken(final String token) {
         DecodedJWT jwt = JWT.decode(token);
 
         String email = jwt.getClaim("email").asString();
         String firstName = jwt.getClaim("given_name").asString();
         String lastName = jwt.getClaim("family_name").asString();
 
-        return new User(firstName, lastName, email);
+        return new UserDetails(firstName, lastName, email);
     }
 }
