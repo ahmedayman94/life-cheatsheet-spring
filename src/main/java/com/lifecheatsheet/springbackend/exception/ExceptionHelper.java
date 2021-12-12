@@ -15,9 +15,4 @@ public class ExceptionHelper {
     public ResponseEntity<?> userAlreadyExistsException(BadRequestException ex){
         return new ResponseEntity<Object>(ex.getMessage(), HttpStatus.BAD_REQUEST);
     }
-
-    @ExceptionHandler(value = {UnAuthorizedException.class})
-    public ResponseEntity<?> userAlreadyExistsException(UnAuthorizedException ex){
-        return new ResponseEntity<Object>(ex.getMessage(), HttpStatus.UNAUTHORIZED);
-    }
 }
