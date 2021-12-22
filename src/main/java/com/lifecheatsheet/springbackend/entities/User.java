@@ -40,7 +40,7 @@ public class User {
         this.lastName = lastName;
         this.email = email;
         isActive = false;
-        access = UserAccessRights.readonly;
+        access = UserAccessRights.READ_ONLY;
     }
 
     public Integer getId() {
