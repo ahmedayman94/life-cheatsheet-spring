@@ -15,4 +15,9 @@ public class ExceptionHelper {
     public ResponseEntity<?> userAlreadyExistsException(BadRequestException ex){
         return new ResponseEntity<Object>(ex.getMessage(), HttpStatus.BAD_REQUEST);
     }
+
+    @ExceptionHandler(value = {NotFoundException.class})
+    public ResponseEntity<?> notFoundException(NotFoundException ex){
+        return new ResponseEntity<Object>(ex.getMessage(), HttpStatus.NOT_FOUND);
+    }
 }
