@@ -36,6 +36,7 @@ public class TokenService {
             Algorithm algorithm = Algorithm.RSA256((RSAPublicKey) jwk.getPublicKey(), null);
             JWTVerifier verifier = JWT.require(algorithm)
                     .withIssuer("accounts.google.com")
+                    .withAudience("637229961998-g5bvh8jj55q2ubgvuh7ej17k8no2vnus.apps.googleusercontent.com")
                     .build();
             verifier.verify(token);
         } catch (JWTVerificationException exception) {
@@ -51,7 +52,8 @@ public class TokenService {
         String email = jwt.getClaim("email").asString();
         String firstName = jwt.getClaim("given_name").asString();
         String lastName = jwt.getClaim("family_name").asString();
+        String picture = jwt.getClaim("picture").asString();
 
-        return new UserDetails(firstName, lastName, email);
+        return new UserDetails(firstName, lastName, email, picture);
     }
 }
