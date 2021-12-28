@@ -1,8 +1,11 @@
 package com.lifecheatsheet.springbackend.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sun.istack.NotNull;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "users")
@@ -25,6 +28,10 @@ public class User {
     private String email;
 
     @NotNull
+    @Column(name = "picture")
+    private String picture;
+
+    @NotNull
     @Column(name = "access")
     private String access;
 
@@ -32,15 +39,40 @@ public class User {
     @Column(name = "is_active")
     private Boolean isActive;
 
+    @JsonIgnore
+    @OneToMany(mappedBy = "author")
+    private Set<Post> posts = new HashSet<>();
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "author")
+    private Set<Category> categories = new HashSet<>();
+
     public User() {
     }
 
-    public User(String firstName, String lastName, String email) {
+    public User(String firstName, String lastName, String email, String picture) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
+        this.picture = picture;
         isActive = false;
         access = UserAccessRights.READ_ONLY;
+    }
+
+    public Set<Post> getPosts() {
+        return posts;
+    }
+
+    public void setPosts(Set<Post> posts) {
+        this.posts = posts;
+    }
+
+    public Set<Category> getCategories() {
+        return categories;
+    }
+
+    public void setCategories(Set<Category> categories) {
+        this.categories = categories;
     }
 
     public Integer getId() {
@@ -89,5 +121,13 @@ public class User {
 
     public void setIsActive(Boolean isActive) {
         this.isActive = isActive;
+    }
+
+    public String getPicture() {
+        return picture;
+    }
+
+    public void setPicture(String picture) {
+        this.picture = picture;
     }
 }

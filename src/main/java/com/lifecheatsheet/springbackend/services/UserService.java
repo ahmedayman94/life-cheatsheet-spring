@@ -29,8 +29,8 @@ public class UserService {
         return userFromDb;
     }
 
-    public User updateUserInfo(int userId, UserUpdateDto user) {
-        final User userFromDb = userRepository.findById(userId).get();
+    public User updateUserInfo(String userEmail, UserUpdateDto user) {
+        final User userFromDb = userRepository.findByEmail(userEmail);
 
         userFromDb.setFirstName(user.getFirstName());
         userFromDb.setLastName(user.getLastName());
@@ -43,7 +43,8 @@ public class UserService {
                 new User(
                         userDetails.getFirstName(),
                         userDetails.getLastName(),
-                        userDetails.getEmail()
+                        userDetails.getEmail(),
+                        userDetails.getPicture()
                 )
         );
     }

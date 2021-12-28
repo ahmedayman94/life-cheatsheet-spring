@@ -4,5 +4,6 @@ CREATE TABLE users (
     last_name   varchar(30) NOT NULL,
     email       varchar(80) NOT NULL UNIQUE,
     access      varchar(30) NOT NULL,
+    picture     varchar(255) NOT NULL,
     is_active   BOOLEAN NOT NULL
 )

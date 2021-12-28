@@ -1,5 +1,6 @@
 package com.lifecheatsheet.springbackend.controllers;
 
+import com.lifecheatsheet.springbackend.config.UserDetails;
 import com.lifecheatsheet.springbackend.dtos.UserUpdateDto;
 import com.lifecheatsheet.springbackend.entities.User;
 import com.lifecheatsheet.springbackend.services.UserService;
@@ -19,18 +20,20 @@ public class UsersController {
     @Autowired
     private UserService userService;
 
-    @GetMapping
-    @RequestMapping("/me")
+    @GetMapping("/me")
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<User> getUserInfo(Authentication authentication) {
         User user = userService.getUserByEmail((String) authentication.getPrincipal());
         return ResponseEntity.ok(user);
     }
 
-    @PostMapping
-    @RequestMapping("/edit")
+    @PostMapping("/edit")
     @ResponseStatus(HttpStatus.OK)
-    public User updateInfo(@Valid @RequestBody final UserUpdateDto user) {
-        return userService.updateUserInfo(4, user);
+    public User updateInfo(
+            @Valid @RequestBody final UserUpdateDto user,
+            Authentication authentication
+            ) {
+        UserDetails userDetails = (UserDetails) authentication.getDetails();
+        return userService.updateUserInfo(userDetails.getEmail(), user);
     }
 }

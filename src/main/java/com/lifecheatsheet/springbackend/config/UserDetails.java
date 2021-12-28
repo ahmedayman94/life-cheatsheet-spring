@@ -6,11 +6,13 @@ public class UserDetails implements Serializable {
     private String firstName;
     private String lastName;
     private String email;
+    private String picture;
 
-    public UserDetails(String firstName, String lastName, String email) {
+    public UserDetails(String firstName, String lastName, String email, String picture) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
+        this.picture = picture;
     }
 
     public String getFirstName() {
@@ -37,4 +39,11 @@ public class UserDetails implements Serializable {
         this.email = email;
     }
 
+    public String getPicture() {
+        return picture;
+    }
+
+    public void setPicture(String picture) {
+        this.picture = picture;
+    }
 }
