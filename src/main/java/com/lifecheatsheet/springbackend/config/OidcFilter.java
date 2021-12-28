@@ -21,29 +21,22 @@ public class OidcFilter extends AbstractAuthenticationProcessingFilter {
     }
 
     @Override
-    public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
+    public Authentication attemptAuthentication(
+            HttpServletRequest request, HttpServletResponse response
+    ) throws AuthenticationException {
         String idToken = request.getParameter("idToken");
 
         return getAuthenticationManager().authenticate(new JwtAuthenticationToken(idToken));
     }
 
     @Override
-    protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException, ServletException {
+    protected void successfulAuthentication(
+            HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult
+    ) throws IOException, ServletException {
         SecurityContextHolder
                 .getContext()
                 .setAuthentication(authResult);
 
-        invalidateOldSessionAndCreateNew(request);
-
         chain.doFilter(request, response);
-    }
-
-    private HttpSession invalidateOldSessionAndCreateNew(HttpServletRequest request) {
-        HttpSession session = request.getSession(false);
-        if (session != null)
-            session.invalidate();
-
-        // Create new session
-        return request.getSession();
     }
 }
