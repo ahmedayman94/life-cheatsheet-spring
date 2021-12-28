@@ -2,6 +2,7 @@ package com.lifecheatsheet.springbackend.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -25,6 +26,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
                 .authorizeRequests()
                 .antMatchers(LOGIN_URL).permitAll()
+                .antMatchers(HttpMethod.GET, "/api/v1/categories/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
 
