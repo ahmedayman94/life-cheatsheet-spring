@@ -1,5 +1,6 @@
 package com.lifecheatsheet.springbackend.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sun.istack.NotNull;
 
 import javax.persistence.*;
@@ -17,8 +18,8 @@ public class Category {
     @Column(name = "title")
     private String title;
 
-    @ManyToOne()
-    @JoinColumn(name = "author_id", referencedColumnName = "user_id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "author_id")
     private User author;
 
     @NotNull
