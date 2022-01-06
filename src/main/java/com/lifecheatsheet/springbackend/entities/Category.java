@@ -15,7 +15,7 @@ public class Category {
     private Integer id;
 
     @NotNull
-    @Column(name = "title")
+    @Column(name = "title", length = 30)
     private String title;
 
     @ManyToOne(fetch = FetchType.LAZY)
