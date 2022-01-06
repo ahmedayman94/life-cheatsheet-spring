@@ -1,4 +1,4 @@
-package com.lifecheatsheet.springbackend.config;
+package com.lifecheatsheet.springbackend.security;
 
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;

@@ -1,6 +1,6 @@
 package com.lifecheatsheet.springbackend.controllers;
 
-import com.lifecheatsheet.springbackend.config.UserDetails;
+import com.lifecheatsheet.springbackend.entities.UserDetails;
 import com.lifecheatsheet.springbackend.dtos.CategoryCreateDto;
 import com.lifecheatsheet.springbackend.dtos.CategoryReadDto;
 import com.lifecheatsheet.springbackend.exception.ForbiddenException;

@@ -1,21 +1,16 @@
 package com.lifecheatsheet.springbackend.services;
 
-import com.lifecheatsheet.springbackend.config.UserDetails;
+import com.lifecheatsheet.springbackend.entities.UserDetails;
 import com.lifecheatsheet.springbackend.dtos.UserUpdateDto;
 import com.lifecheatsheet.springbackend.entities.User;
 import com.lifecheatsheet.springbackend.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 @Service
 public class UserService {
     @Autowired
-    private UserRepository userRepository;
-
-    public UserService(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
+    UserRepository userRepository;
 
     public User getUserByEmail(String email) {
         return userRepository.findByEmail(email);

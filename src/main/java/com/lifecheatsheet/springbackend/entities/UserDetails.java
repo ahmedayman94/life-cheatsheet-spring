@@ -1,4 +1,4 @@
-package com.lifecheatsheet.springbackend.config;
+package com.lifecheatsheet.springbackend.entities;
 
 import java.io.Serializable;
 

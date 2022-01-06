@@ -1,4 +1,4 @@
-package com.lifecheatsheet.springbackend.config;
+package com.lifecheatsheet.springbackend.security;
 
 import com.lifecheatsheet.springbackend.exception.UnAuthorizedException;
 import com.lifecheatsheet.springbackend.services.TokenService;

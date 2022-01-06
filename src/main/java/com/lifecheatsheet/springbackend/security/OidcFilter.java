@@ -1,4 +1,4 @@
-package com.lifecheatsheet.springbackend.config;
+package com.lifecheatsheet.springbackend.security;
 
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.Authentication;
@@ -10,12 +10,11 @@ import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 public class OidcFilter extends AbstractAuthenticationProcessingFilter {
 
-    protected OidcFilter(String defaultFilterProcessesUrl, AuthenticationManager authManager) {
+    public OidcFilter(String defaultFilterProcessesUrl, AuthenticationManager authManager) {
         super(defaultFilterProcessesUrl);
         setAuthenticationManager(authManager);
     }

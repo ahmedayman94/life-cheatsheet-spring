@@ -10,7 +10,7 @@ import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.DecodedJWT;
-import com.lifecheatsheet.springbackend.config.UserDetails;
+import com.lifecheatsheet.springbackend.entities.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.net.MalformedURLException;

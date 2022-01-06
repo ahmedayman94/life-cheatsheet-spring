@@ -1,7 +1,6 @@
 package com.lifecheatsheet.springbackend.controllers;
 
-import com.lifecheatsheet.springbackend.config.JwtAuthenticationToken;
-import com.lifecheatsheet.springbackend.config.UserDetails;
+import com.lifecheatsheet.springbackend.entities.UserDetails;
 import com.lifecheatsheet.springbackend.entities.User;
 import com.lifecheatsheet.springbackend.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +24,7 @@ public class AuthController {
     public ResponseEntity<User> provisionUserFromGoogle(
             HttpServletRequest request,
             Authentication authentication
-    ) throws Exception {
+    ) {
         User user = userService.provisionUser((UserDetails) authentication.getDetails());
         invalidateOldSessionAndCreateNew(request);
 
@@ -37,7 +36,7 @@ public class AuthController {
     public void logout(
             HttpServletRequest request,
             Authentication authentication
-    ) throws Exception {
+    ) {
         request.getSession(false).invalidate();
     }
 

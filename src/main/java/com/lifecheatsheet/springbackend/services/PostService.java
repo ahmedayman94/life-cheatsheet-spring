@@ -1,6 +1,6 @@
 package com.lifecheatsheet.springbackend.services;
 
-import com.lifecheatsheet.springbackend.config.UserDetails;
+import com.lifecheatsheet.springbackend.entities.UserDetails;
 import com.lifecheatsheet.springbackend.dtos.PostEditDto;
 import com.lifecheatsheet.springbackend.entities.Category;
 import com.lifecheatsheet.springbackend.entities.Post;

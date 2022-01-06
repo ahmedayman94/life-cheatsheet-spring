@@ -1,5 +1,6 @@
-package com.lifecheatsheet.springbackend.config;
+package com.lifecheatsheet.springbackend.security;
 
+import com.lifecheatsheet.springbackend.entities.UserDetails;
 import org.springframework.security.authentication.AbstractAuthenticationToken;
 
 public class JwtAuthenticationToken extends AbstractAuthenticationToken {
