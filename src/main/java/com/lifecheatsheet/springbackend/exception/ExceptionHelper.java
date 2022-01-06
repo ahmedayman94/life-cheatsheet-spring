@@ -20,4 +20,9 @@ public class ExceptionHelper {
     public ResponseEntity<?> notFoundException(NotFoundException ex){
         return new ResponseEntity<Object>(ex.getMessage(), HttpStatus.NOT_FOUND);
     }
+
+    @ExceptionHandler(value = {ForbiddenException.class})
+    public ResponseEntity<?> forbiddenException(ForbiddenException ex){
+        return new ResponseEntity<Object>(ex.getMessage(), HttpStatus.FORBIDDEN);
+    }
 }
