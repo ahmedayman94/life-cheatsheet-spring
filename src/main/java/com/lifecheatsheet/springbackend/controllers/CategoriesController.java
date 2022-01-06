@@ -3,13 +3,12 @@ package com.lifecheatsheet.springbackend.controllers;
 import com.lifecheatsheet.springbackend.config.UserDetails;
 import com.lifecheatsheet.springbackend.dtos.CategoryCreateDto;
 import com.lifecheatsheet.springbackend.dtos.CategoryReadDto;
-import com.lifecheatsheet.springbackend.entities.Category;
+import com.lifecheatsheet.springbackend.exception.ForbiddenException;
 import com.lifecheatsheet.springbackend.exception.NotFoundException;
 import com.lifecheatsheet.springbackend.services.CategoryService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
@@ -49,7 +48,7 @@ public class CategoriesController {
     public CategoryReadDto createCategory(
             @Valid @RequestBody CategoryCreateDto categoryCreateDto,
             Authentication authentication
-    ) {
+    ) throws ForbiddenException {
         UserDetails userDetails = (UserDetails) authentication.getDetails();
         return modelMapper.map(
                 categoryService.createNewCategory(categoryCreateDto, userDetails.getEmail()),
@@ -62,8 +61,8 @@ public class CategoriesController {
     public void deleteCategory(
             @PathVariable @Valid int id,
             Authentication authentication
-    ) throws NotFoundException {
+    ) throws NotFoundException, ForbiddenException {
         UserDetails userDetails = (UserDetails) authentication.getDetails();
-        categoryService.deleteCategory(id);
+        categoryService.deleteCategory(id, userDetails.getEmail());
     }
 }
