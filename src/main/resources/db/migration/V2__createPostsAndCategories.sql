@@ -10,8 +10,8 @@ CREATE TABLE categories (
 
 CREATE TABLE posts (
     post_id         SERIAL PRIMARY KEY,
-    title           varchar(30) NOT NULL,
-    content         varchar(500) NOT NULL,
+    title           varchar(200) NOT NULL,
+    content         varchar(10000) NOT NULL,
     author_id		INT NOT NULL,
     category_id		INT NOT NULL,
     CONSTRAINT FK_USER
