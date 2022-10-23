@@ -17,13 +17,13 @@ import java.util.Optional;
 @Service
 public class CategoryService {
     @Autowired
-    CategoryRepository categoryRepository;
+    private CategoryRepository categoryRepository;
 
     @Autowired
-    UserRepository userRepository;
+    private UserRepository userRepository;
 
     @Autowired
-    PermissionService permissionService;
+    private PermissionService permissionService;
 
     public List<Category> getAllCategories() {
         return categoryRepository.findAll();

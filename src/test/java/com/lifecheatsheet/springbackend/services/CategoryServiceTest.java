@@ -1,19 +1,19 @@
 package com.lifecheatsheet.springbackend.services;
 
 import com.lifecheatsheet.springbackend.dtos.CategoryCreateDto;
-import com.lifecheatsheet.springbackend.entities.Category;
-import com.lifecheatsheet.springbackend.entities.User;
+import com.lifecheatsheet.springbackend.entities.*;
 import com.lifecheatsheet.springbackend.exception.ForbiddenException;
 import com.lifecheatsheet.springbackend.exception.NotFoundException;
 import com.lifecheatsheet.springbackend.repositories.CategoryRepository;
 import com.lifecheatsheet.springbackend.repositories.UserRepository;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.api.function.Executable;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.ArrayList;
@@ -21,31 +21,24 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 public class CategoryServiceTest {
     private final List<Category> categoriesList = new ArrayList<>();
 
-    private CategoryService categoryService;
+    @Mock
+    private PermissionService permissionService;
 
     @Mock
-    PermissionService permissionService;
+    private CategoryRepository categoryRepository;
 
     @Mock
-    CategoryRepository categoryRepository;
+    private UserRepository userRepository;
 
-    @Mock
-    UserRepository userRepository;
-
-    @BeforeEach
-    public void setup() {
-        categoryService = new CategoryService();
-        categoryService.categoryRepository = categoryRepository;
-        categoryService.userRepository = userRepository;
-        categoryService.permissionService = permissionService;
-    }
+    @Spy
+    @InjectMocks
+    private CategoryService categoryService = new CategoryService();
 
     @Test
     public void getAllCategories_shouldReturnAllCategories() {
@@ -75,7 +68,9 @@ public class CategoryServiceTest {
     void getCategoryById_categoryExists_shouldReturnCorrectCategory() throws NotFoundException {
         // ARRANGE
         Category expectedCategory = new Category();
-        Mockito.when(categoryRepository.findById(1)).thenReturn(Optional.of(expectedCategory));
+        Mockito
+                .when(categoryRepository.findById(Mockito.anyInt()))
+                .thenReturn(Optional.of(expectedCategory));
 
         // ACT
         Category actualCategory = categoryService.getCategoryById(1);
@@ -126,6 +121,7 @@ public class CategoryServiceTest {
         // ASSERT
         verify(categoryRepository, times(1)).saveAndFlush(any());
     }
+
     @Test
     void deleteCategory_userDoesntHavePermission_shouldNotDeleteCategoryAndThrowException()
             throws ForbiddenException {
